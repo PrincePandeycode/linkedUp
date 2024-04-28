@@ -1,0 +1,102 @@
+{%extends 'base/main.html'%}
+{% load static%}
+{% block head %}
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script> -->
+ 
+<style>
+    /* Modify the background color */
+    .bg-custom{
+        background-color: rgba(93, 28, 139, 0.975);
+    }
+    .custom-bdr{
+        border: 2px solid white;
+        color: aliceblue;
+    }
+    .navbar-brand img {
+        max-height: 80px; /* Adjust the maximum height as needed */
+        width: auto; /* Maintain the aspect ratio */
+ 
+    }
+
+</style>
+{%endblock head %}
+    
+{% block content%}
+
+<!-- nav starrt -->
+<nav class="navbar navbar-expand-lg bg-custom rounded-bottom" data-bs-theme="dark" >
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#"><img src="{% static 'images/tlogo.png'%}"  style="mix-blend-mode:lighten;" alt="Logo"></a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 gap-3 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link fs-4" aria-current="page" href="{% url 'home' %}">Home</a>
+        </li>
+       
+       
+       
+      </ul>
+
+    <div class="loginSec">
+   
+      
+      <!-- <button type="button" class="btn btn-custom custom-bdr me-3 fs-4">Register</button> -->
+    
+      <a href="{% url 'register_user' %}" class="btn custom-bdr fs-4">Don't have an account?Register</a>
+   
+      
+    </div>
+  </div>
+</nav>
+
+</div>
+<!-- end nav -->
+
+
+
+<div class="container shadow rounded-4 bg-white mt-5 p-4">
+<h1 class="text-center display-3">Login</h1>
+
+
+{% if messages %}
+    {%for message in messages%}
+     {{message}}
+    {%endfor%}
+{% endif%}
+
+<div class="row">
+  <div class="col-2"></div>
+  <div class="col">
+
+    <form action="", method="POST">
+      {%csrf_token%}
+  
+  
+      
+          <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">username</label>
+            <input type="text" class="form-control" name="username" aria-describedby="emailHelp">
+            <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Password</label>
+            <input type="password" class="form-control" name="password">
+          </div>
+         
+          <button type="submit" class="btn btn-primary">Submit</button>
+        
+  </form>
+  
+
+  </div>
+  <div class="col-2"></div>
+</div>
+
+
+</div>
+
+
+{%endblock%} 

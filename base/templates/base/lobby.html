@@ -1,0 +1,150 @@
+{%extends 'base/main.html'%}
+{% load static %}
+{% block head %}
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script> -->
+ 
+<style>
+    /* Modify the background color */
+    .bg-custom{
+        background-color: rgba(93, 28, 139, 0.975);
+    }
+    .custom-bdr{
+        border: 2px solid white;
+        color: aliceblue;
+    }
+    .navbar-brand img {
+        max-height: 80px; /* Adjust the maximum height as needed */
+        width: auto; /* Maintain the aspect ratio */
+ 
+    }
+
+</style>
+{%endblock head %}
+
+
+
+{% block content%}
+
+
+<!-- navbar start -->
+<nav class="navbar navbar-expand-lg bg-custom rounded-bottom" data-bs-theme="dark" >
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#"><img src="{% static 'images/tlogo.png'%}"  style="mix-blend-mode:lighten;" alt="Logo"></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 gap-3 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link fs-4" aria-current="page" href="{% url 'home' %}">Home</a>
+          </li>
+         
+         
+         
+        </ul>
+
+      <div class="loginSec">
+        {% if user.is_authenticated %}
+        
+        <p class="btn btn-custom me-3 fs-4">{{ user.username }}</p>
+        <a href="{% url 'logout' %}" class="btn btn-custom me-3"><img src="{% static 'images/logout.png' %}" style="max-width: 30px; min-height: auto; mix-blend-mode:multiply;"/></a>
+      
+
+        {% else %}
+        
+        <!-- <button type="button" class="btn btn-custom custom-bdr me-3 fs-4">Register</button> -->
+        <a href="{% url 'login' %}" class="btn custom-bdr fs-4">Login</a>
+        <a href="{% url 'register_user' %}" class="btn custom-bdr fs-4">Register</a>
+        {% endif %}   </div>
+        
+      </div>
+    </div>
+  </nav>
+
+</div>
+
+<!-- navbar end -->
+
+<div class="row mt-5">
+    <div class="col-3"></div>
+    <div class="col-6 text-center shadow-lg mb-3 px-5 rounded-4">
+        <main>
+
+            <section id="form-container">
+                <!-- <img id="logo" src="{%static 'images/chat-icon.png'%}" alt="dm"> -->
+               <!-- 72. ADDING ID HERE  -->
+                <div  id="welcome-message">
+                    <h1 class="display-2 mb-lg-5"><strong>Join Meeting</strong></h1>
+                    <h3 class="display-6 mb-2">Meeting Id or Room name</h3>
+                </div>
+        
+                <form id="form">
+                    <!-- 60. adding input for entering channel name for user -->
+                    <div class="form-field">
+                        <input type="text" class="form-control mb-3" name="room" placeholder="Enter A room name" style="text-transform: uppercase;">
+                    </div>
+        
+                    <!-- 73. enter your name  after that some css for lobby.html --> 
+                    <div class="form-field">
+                        <input type="text" class="form-control mb-3" name="username" placeholder="Enter your name" style="text-transform: uppercase;">
+                    </div>
+        
+                    <!-- <div class="form-field">
+                        <input type="submit" class="btn btn-secondary d-grid gap-2" value="Join Room">
+                    </div> -->
+                    <small class="text-body-secondary">By clicking "Join", you agree to our <a href="#">Terms of Services</a> and <a href="#">Privacy Statement</a>
+
+                    </small>
+                    
+
+                    <div class="d-grid gap-2">
+                        <button class="btn bg-custom custom-bdr mb-5" type="submit">Join Room</button>
+                      </div>
+                </form>
+        
+            </section>
+            
+        </main>
+    </div>
+    <div class="col-3"></div>
+</div>
+
+
+<script>
+    let form = document.getElementById('form')
+    let handleSubmit = async(e) =>{
+        e.preventDefault()
+        // 61.  now we will get the channel name from user --> make a request to generate token name for user --> store those uid and token no in session storage on user side--> join the room
+        //62. getting the channel name form field --> use roomname for referance
+        let room = e.target.room.value.toUpperCase()
+        // 78. now we will get the usename and store it in our session here.
+        let name = e.target.username.value
+
+
+        //63. Now We will Make the request to the backend using the channel name
+        //fetching the respponse
+        let response = await fetch(`/get_token?channel=${room}`)
+        
+        //64.Parsing the response
+        let data = await response.json()
+
+        //65.Now we will get our values from the data remeber get_token gives token and uid
+        let UID = data.uid
+        let token = data.token
+
+        //66.Now we will store these values in session storage(3values are neede room name ,token no. and a uid)
+        sessionStorage.setItem('UID',UID)
+        sessionStorage.setItem('token',token)
+        sessionStorage.setItem('room',room)
+        // 79. we wil store the name value in session --> now we acess name in streams.js
+        sessionStorage.setItem('name',name)
+
+        //67. Now that we have all these three values stored in our session we will use them in our frontend -->using them in our streams.js
+
+
+        window.open('/room','_self')
+    }
+
+    form.addEventListener('submit',handleSubmit)
+</script>
+{%endblock%}

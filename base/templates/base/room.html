@@ -1,0 +1,107 @@
+{%extends 'base/main.html'%}
+{% load static%}
+
+{%block head%}
+
+<style>
+    body{
+        background-color: rgb(26, 26, 26);
+        color: white;
+        /* overflow: hidden; */
+    }
+
+    .top-navb{
+        background-color: rgb(20, 20, 20);
+    }
+
+    .btn-bg{
+        background-color: #ff0000;
+    }
+</style>
+
+{%endblock head%}
+
+{% block content%}
+
+
+
+<div class="row top-navb mt-2 h-100 px-4 rounded">
+    <div class="col-6 ">
+        <section id="room-name-wrapper" class="py-4 w-100 d-flex justify-content-start align-items-center">
+            <p>{{ current_time }} | <span id="room-name" class="h5"></span></p>
+        </section>
+    </div>
+    <div class="col d-flex justify-content-end align-items-center">
+        <section id="controls-wrapper" class="d-flex flex-row justify-content-end py-3">
+            <div class="icon-wrapper mx-3">
+                <img  class="control-icon" id="video-btn" src='{% static "images/video.svg"%}'>
+            </div>
+            <div class="icon-wrapper mx-3">
+                <img  class="control-icon" id="mic-btn" src='{% static "images/microphone.svg"%}'>
+            </div>
+            <div class="icon-wrapper mx-3">
+                <button class="rounded-3 btn-bg text-white w-100 h-100" style="padding: 10px;" id="leave-btn"><strong>Leave meeting</strong></button>
+            </div>
+        </section>
+    </div>
+</div>
+
+
+
+
+<div class="row text-center mt-2">
+    <div class="col-2" >
+        <div class="border border-white border-3 rounded-3 h-100 w-100 d-inline-block p-4">
+        In the Meeting
+        <ul>
+            <li>Prince Pandey</li>
+            <li>Prince Pandey</li>
+            <li>Prince Pandey</li>
+            <li>Prince Pandey</li>
+            <li>Prince Pandey</li>
+            <li>Prince Pandey</li>
+            <li>Prince Pandey</li>
+            <li>Prince Pandey</li>
+            <li>Prince Pandey</li>
+        </ul>
+        </div>
+    </div>
+    
+    
+    <div class="col-8">
+        <main>
+
+        <section id="video-streams"></section>
+    
+        </main>
+    </div>
+
+    <div class="col-2" >
+        <div class="border border-white border-3 rounded-3 h-100 w-100 d-inline-block p-4">
+      chats
+        <ul>
+            <li>Prince Pandey</li>
+            <li>Prince Pandey</li>
+            <li>Prince Pandey</li>
+            <li>Prince Pandey</li>
+            <li>Prince Pandey</li>
+            <li>Prince Pandey</li>
+            <li>Prince Pandey</li>
+            <li>Prince Pandey</li>
+            <li>Prince Pandey</li>
+        </ul>
+        </div>
+    </div>
+
+
+</div>
+
+<div class="row">
+    <div class="col">
+       
+    </div>
+</div>
+
+<script type="text/javascript" src='{% static "assets/AgoraRTC_N-4.20.2.js"%}'></script>
+<script type="text/javascript" src='{% static "js/streams.js"%}'></script>
+{%endblock%} 

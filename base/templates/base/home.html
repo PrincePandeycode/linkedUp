@@ -1,0 +1,241 @@
+{%extends 'base/main.html'%}
+{% load static %}
+
+{% block head %}
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script> -->
+ 
+<style>
+    /* Modify the background color */
+    .bg-custom{
+        background-color: rgba(93, 28, 139, 0.975);
+    }
+    .custom-bdr{
+        border: 2px solid white;
+        color: aliceblue;
+    }
+    .navbar-brand img {
+        max-height: 80px; /* Adjust the maximum height as needed */
+        width: auto; /* Maintain the aspect ratio */
+ 
+    }
+
+
+    .col1 img {
+        mix-blend-mode: multiply; /* Remove the background */
+        max-width: 180px; /* Set the maximum width of the image */
+        height: auto; /* Maintain the aspect ratio */
+        margin: 0 auto;
+    }
+    .col2 img {
+        mix-blend-mode: multiply; /* Remove the background */
+        max-width: 750px; /* Set the maximum width of the image */
+        height: auto; /* Maintain the aspect ratio */
+        margin: 0 auto;
+    }
+
+    .col1{
+      max-width: 700px;
+    }
+
+    .col1,col2{
+      justify-content: center;
+      align-items: center;
+      max-width: 100%;
+    }
+
+    .first-para{
+      color: rgb(36,1,54);
+      font-size: 170%;
+      letter-spacing: 1px;
+      font-weight: 320;
+    }
+
+    
+
+    .parent-cont{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding-bottom: 20px;
+    }
+
+    .res{
+      mix-blend-mode:darken;
+    }
+    .res img{
+      max-width: 620px; /* Set the maximum width of the image */
+        height: auto; /
+    }
+    
+    #imagePlaceholder {
+    transition: opacity 2s ease; /* Adjust duration and timing function as needed */
+}
+</style>
+{%endblock head %}
+
+{% block content%}
+
+<div class="main">
+    <div class="firstcomponnet">
+   
+        <nav class="navbar navbar-expand-lg bg-custom rounded-bottom" data-bs-theme="dark" >
+            <div class="container-fluid">
+              <a class="navbar-brand" href="#"><img src="{% static 'images/tlogo.png'%}"  style="mix-blend-mode:lighten;" alt="Logo"></a>
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 gap-3 mb-lg-0">
+                  <li class="nav-item">
+                    <a class="nav-link fs-4" aria-current="page" href="{% url 'home' %}">Home</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link fs-4" href="#">Products</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link fs-4" href="#">Solutions</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link fs-4" href="#">Plans & Pricing</a>
+                  </li>
+                 
+                 
+                </ul>
+
+              <div class="loginSec">
+                {% if user.is_authenticated %}
+                
+                <p class="btn btn-custom me-3 fs-4">{{ user.username }}</p>
+                <a href="{% url 'logout' %}" class="btn btn-custom me-3"><img src="{% static 'images/logout.png' %}" style="max-width: 30px; min-height: auto; mix-blend-mode:multiply;"/></a>
+              
+
+                {% else %}
+                
+                <!-- <button type="button" class="btn btn-custom custom-bdr me-3 fs-4">Register</button> -->
+                <a href="{% url 'login' %}" class="btn custom-bdr fs-4">Login</a>
+                <a href="{% url 'register_user' %}" class="btn custom-bdr fs-4">Register</a>
+                {% endif %}   </div>
+                
+              </div>
+            </div>
+          </nav>
+
+        </div>
+        <!-- navigation bar ends here -->
+        
+
+     
+
+
+      </div>
+
+      
+</div>
+
+<div class="container-fluid mt-3">
+
+  {% if messages %}
+    {%for message in messages%}
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+      <strong>{{message}}</strong>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {%endfor%}
+{% endif%}
+
+</div>
+
+<!-- the front view of page -->
+<div class="secondC">
+<div class="row py-4 parent-cont mt-5">
+  <div class="col col1 text-center">
+
+    <img src="{% static 'images/homepageimg.png'%}" class="mx-auto" alt="Logo">
+    <h1 id="tagline" class="text-center display-1" >Be <span id="word" style="color:rgb(36,1,54); transition: opacity 0.5s;">together</span> in the <br>Moment.</h1>
+
+    <p class="first-para display-6 py-3 pe-5 " > simple, high quality video calls from <br>  smartphones,tablets,computers,  <br> Smart Displays like Google Nest Hub Max</p>
+   <div class="res">
+    <img src="{% static 'images/responsive.png'%}" class="mx-auto" alt="Logo">
+
+   </div>
+   
+
+  {% if user.is_authenticated%}
+  <div class="d-grid gap-2 col-12 mx-auto " style="max-width:500px;">
+    <a href="{% url 'lobby' %}" class="btn btn-primary btn-lg fs-3 bg-custom custom-bdr">Create or join Room</a>
+  </div>
+
+  {%else%}
+  <div class="d-grid gap-2 col-12 mx-auto " style="max-width:500px;">
+    <a href="{% url 'login' %}" class="btn btn-primary btn-lg fs-3 bg-custom custom-bdr">try LinkedUp for Web</a>
+  </div>
+
+  {% endif %}
+
+  </div>
+  <div class="col col2 ms-5 ps-3 text-center">
+
+    <img id="imagePlaceholder" src="{% static 'images/change1.png' %}" alt="Image" style="max-width: 800px;" class="img-fluid">
+   
+  </div>
+</div>
+</div>
+<!-- front view ends here -->
+       
+
+
+
+
+{% endblock content%}
+{%block javaScripts%}
+<script>
+ var images = [
+    "{% static 'images/change1.png' %}",
+    "{% static 'images/change4.png' %}",
+    "{% static 'images/change3.png' %}"
+];
+
+var currentIndex = 0;
+
+// Function to change image with fade transition
+function changeImage() {
+    var imageElement = document.getElementById('imagePlaceholder');
+    // Fade out the current image
+    imageElement.style.opacity = 0;
+    
+    // Delay before changing the image and fading in the new one
+    setTimeout(function() {
+        currentIndex = (currentIndex + 1) % images.length;
+        imageElement.src = images[currentIndex];
+        // Fade in the new image
+        imageElement.style.opacity = 1;
+    }, 500); // Adjust delay as needed
+}
+
+// Call the changeImage function initially
+changeImage();
+
+// Set interval to change image every 4 seconds
+setInterval(changeImage, 7000); // Change image every 4 seconds (4000 milliseconds)
+  function toggleWords() {
+        var tagline = document.getElementById('tagline');
+        var word = document.getElementById('word');
+        var words = ["connected", "productive"]; // Array of words to toggle
+        var index = 0; // Index to track the current word
+
+        setInterval(function() {
+            word.style.opacity = 0; // Set opacity to 0 to hide the word
+            setTimeout(function() {
+                word.innerHTML = words[index]; // Change the word
+                word.style.opacity = 1; // Set opacity to 1 to show the word with transition effect
+                index = (index + 1) % words.length; // Increment index and wrap around to the start of the array if needed
+            }, 500); // Delay to change the word (adjust as needed)
+        }, 4000); // Interval to toggle words (adjust as needed)
+    }
+
+    // Call the function to toggle words
+    toggleWords();
+</script>
+
+
+{%endblock javaScripts%}

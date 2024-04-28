@@ -1,0 +1,177 @@
+body{
+
+    background-color:rgb(243, 242, 242);
+    /* color: #ffffff; */
+}
+/* lobby */
+/* 74. some css for lobby.html */
+/* #logo{
+    display: block;
+    width: 100px ;
+    margin: 0 auto;
+}
+
+#form-container{
+    width:400px;
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 5px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+
+#welcome-message{
+    text-align: center;
+    margin: 20;
+}
+
+#welcome-message h1{
+    font-size: 36px;
+}
+#welcome-message p{
+    font-size: 16px;
+}
+
+.form-field{
+    margin: 20px;
+}
+
+
+
+.form-field label{
+    font-size: 16px;
+    line-height: 1.7em;
+}
+
+.form-field input{
+    width: 100%;
+    border: 2px solid rgb(98, 84, 98);
+    border-radius: 5px;
+    padding: 10px;
+    box-sizing: border-box;
+}
+.form-field input[type = 'submit']{
+    background-color: #0e0410;
+   
+   border: none;
+   color: white;
+}
+
+@media screen and (max-width:450px) {
+    #form-container{
+        width: 90%;
+
+    }
+    #welcome-message h1{
+        font-size: 24px;
+    }
+
+    
+} */
+
+
+
+/* room - desiign */
+/* 75. Now Some video room Styling */
+
+
+
+#video-streams{
+    display: flex;
+    flex-wrap: wrap;
+    height: 85vh;
+    width: 75%;
+    margin: 0 auto;
+}
+
+
+.video-container{
+    flex-basis: 500px ;
+    flex-grow: 1;
+    max-height: 100%;
+    min-height: 350px;
+    border: 1px solid rgb(74, 0, 81);
+    border-radius: 5px;
+    margin: 2px;
+    background-color: rgba(198, 202, 219, 1);
+    position: relative; /* for username in step 75 */
+}
+
+.video-player{
+    height: 100%;
+    width: 100%;
+}
+
+/* 76. fixing the video borders--> although it is coming dynamically but is is the child of video-palayer element */
+/* -- so we will get the video as the child of video player */
+.video-player > *{
+    border-radius: 5px;
+}
+
+#room-name-wrapper{
+    color: #ffffff;
+    text-align: center;
+    font-size: 20px;
+}
+
+.username-wrapper{
+     position: absolute;
+     top:15px;
+     left: 10px;
+     z-index: 12;
+     background-color: #2d2943;
+     color: #ffffff;
+     padding: 14px;
+     border-radius: 5px;
+     font-size: 14px;
+
+}
+
+/* 77. after the styling Now we will set the name of user after getting from lobby from user 
+    the issue is we cant pass name to other users like we publish streams to channel. so we crete a table in the db that stores temporary name values
+    so. inside while joining user . we have access to user_id and room name.
+    so whenever user fills his name . we store it in session--> go to lobby.html */
+@media screen and(max-width:1650px) {
+    .video-container{
+        flex-basis: 300px;
+        min-height: 200px;
+    }
+    
+}
+
+/* room - control icons styling */
+
+.control-icon{
+    height: 43px;
+    width: 43px;
+    cursor: pointer;
+   padding: 10px;
+   /* background-color: #fff; */
+   border-radius: 4px;
+
+}
+
+#controls-wrapper{
+    /* display: flex;
+    justify-content: center;
+    width: 100%;
+    position: fixed; */
+    /* column-gap: 1em; */
+    /* bottom: 40px; */
+}
+
+#leave-btn{
+    background-color: #ff0000;
+    /* mix-blend-mode:; */
+
+}
+
+#video-btn{
+    background-color: rgb(198, 198, 198);
+
+}
+#mic-btn{
+    background-color: rgb(198, 198, 198);
+}
