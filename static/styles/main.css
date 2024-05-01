@@ -1,6 +1,6 @@
 body{
 
-    background-color:rgb(243, 242, 242);
+    background-color:rgb(246, 244, 244);
     /* color: #ffffff; */
 }
 /* lobby */
@@ -78,25 +78,48 @@ body{
 
 
 
-#video-streams{
+/* #video-streams{
     display: flex;
     flex-wrap: wrap;
     height: 85vh;
-    width: 75%;
+    width: 90%;
     margin: 0 auto;
+    /* align-items: center; 
+} */
+#video-streams{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    /* align-items: center; */
+    width: 100%;
+    overflow:hidden;
+    height: 85vh;
 }
 
 
-.video-container{
-    flex-basis: 500px ;
+/* .video-container{
+    flex-basis: 250px ;
     flex-grow: 1;
-    max-height: 100%;
+    width: calc(50% - 20px); /* Adjust the width as needed *//*
+    margin: 10px; /* Add some spacing between the containers */
+    /* max-height: 100%; *//*
     min-height: 350px;
-    border: 1px solid rgb(74, 0, 81);
-    border-radius: 5px;
-    margin: 2px;
+    border: 2px solid rgb(19, 18, 18);
+    border-radius: 7px;
+    /* margin: 2px; *//*
     background-color: rgba(198, 202, 219, 1);
-    position: relative; /* for username in step 75 */
+    position: relative; /* for username in step 75 *//*
+} */
+.video-container{
+  
+    /* align-self: stretch;  */
+    position: relative;
+    min-height: 400px;
+    max-height:600px;
+    width: calc(50% - 20px); /* Adjust the width as needed */
+    margin: 10px; /* Add some spacing between the containers */
+    border: 3px solid rgb(19, 18, 18);
+    border-radius: 9px;
 }
 
 .video-player{
@@ -121,11 +144,14 @@ body{
      top:15px;
      left: 10px;
      z-index: 12;
-     background-color: #2d2943;
+     /* background-color: rgba(16, 15, 16, 0.816); */
+     /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
+
      color: #ffffff;
      padding: 14px;
      border-radius: 5px;
-     font-size: 14px;
+     font-size: 19px;
+     font-weight: bold;
 
 }
 
@@ -174,4 +200,17 @@ body{
 }
 #mic-btn{
     background-color: rgb(198, 198, 198);
+}
+
+.my-div-class{
+    width: 100%;
+    height: fit-content;
+    background-color: rgba(16, 15, 16, 0.816);
+    border-radius: 5px;
+}
+
+.my-paragraph-class{
+    border-radius: 5px;
+    padding: 5px;
+    color: #ffffff;
 }

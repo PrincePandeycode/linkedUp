@@ -8,6 +8,7 @@
         background-color: rgb(26, 26, 26);
         color: white;
         /* overflow: hidden; */
+        height:100%;
     }
 
     .top-navb{
@@ -17,6 +18,8 @@
     .btn-bg{
         background-color: #ff0000;
     }
+    
+    
 </style>
 
 {%endblock head%}
@@ -32,6 +35,16 @@
         </section>
     </div>
     <div class="col d-flex justify-content-end align-items-center">
+        <!-- <button class="btn btn-primary" id="toggle-meeting-column">Toggle Meeting Column</button> -->
+        
+            <img class="mx-3"  id="toggle-meeting-column" src='{% static "images/people2.svg"%}' style="height: 35px;">
+            <img class="mx-3"  id="toggle-chat-column" src='{% static "images/chat4.svg"%}' style="height: 38px;">
+        
+        <!-- <button class="btn btn-primary" id="toggle-chat-column">Toggle chat Column</button> -->
+
+
+        {% comment %} if someone come make a roe col col and on row two users . for styling go to players make this happen {% endcomment %}
+
         <section id="controls-wrapper" class="d-flex flex-row justify-content-end py-3">
             <div class="icon-wrapper mx-3">
                 <img  class="control-icon" id="video-btn" src='{% static "images/video.svg"%}'>
@@ -49,34 +62,26 @@
 
 
 
-<div class="row text-center mt-2">
-    <div class="col-2" >
+<div class="row text-center mt-2 " style="height: 80vh;">
+    <div class="col-2" id="meeting-column" style="visibility: hidden;" >
         <div class="border border-white border-3 rounded-3 h-100 w-100 d-inline-block p-4">
-        In the Meeting
-        <ul>
-            <li>Prince Pandey</li>
-            <li>Prince Pandey</li>
-            <li>Prince Pandey</li>
-            <li>Prince Pandey</li>
-            <li>Prince Pandey</li>
-            <li>Prince Pandey</li>
-            <li>Prince Pandey</li>
-            <li>Prince Pandey</li>
-            <li>Prince Pandey</li>
-        </ul>
+        <div class="w-100 mx-3 h5 d-flex justify-content-start">In the meet:</div> <hr>
+        <div id="user-list-container" class="h-100 w-100">
+            
+        </div>
         </div>
     </div>
     
     
-    <div class="col-8">
-        <main>
+    <div class="col-8 text-center" id="main-content-column">
+        <main class="text-center" >
 
-        <section id="video-streams"></section>
+        <section id="video-streams" class="text-center"></section>
     
         </main>
     </div>
 
-    <div class="col-2" >
+    <div class="col-2"  id="chat-column" style="visibility: hidden;" >
         <div class="border border-white border-3 rounded-3 h-100 w-100 d-inline-block p-4">
       chats
         <ul>
@@ -96,11 +101,51 @@
 
 </div>
 
-<div class="row">
-    <div class="col">
+
+<script>
+    document.getElementById('toggle-meeting-column').addEventListener('click', function() {
+        // Toggle the visibility of the "In the meet" column
+        // document.getElementById('meeting-column').classList.toggle('d-none');
+        var meetingColumn = document.getElementById('meeting-column');
+
+// Check if the element is currently visible
+if (meetingColumn.style.visibility === 'visible') {
+    // If visible, hide the element
+    meetingColumn.style.visibility = 'hidden';
+    // meetingColumn.style.width = '200px'
+} else {
+    // If hidden, show the element
+    meetingColumn.style.visibility = 'visible';
+    // meetingColumn.style.width = '';
+}
+     
+    });
+
+    document.getElementById('toggle-chat-column').addEventListener('click', function() {
+        // Toggle the visibility of the "Chats" column
+        // document.getElementById('chat-column').classList.toggle('d-none');
+        var chatColumn = document.getElementById('chat-column');
+
+// Check if the element is currently visible
+        if (chatColumn.style.visibility === 'visible') {
+            // If visible, hide the element
+            chatColumn.style.visibility = 'hidden';
+            // meetingColumn.style.width = '200px'
+        } else {
+    // If hidden, show the element
+    chatColumn.style.visibility = 'visible';
+    // meetingColumn.style.width = '';
+    }   
+        // Adjust the width of the main content column
+        
+    });
+
+    function adjustMainContentColumn() {
+        // Get references to the "In the meet" and "Chats" columns
        
-    </div>
-</div>
+    }
+</script>
+
 
 <script type="text/javascript" src='{% static "assets/AgoraRTC_N-4.20.2.js"%}'></script>
 <script type="text/javascript" src='{% static "js/streams.js"%}'></script>

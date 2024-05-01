@@ -97,6 +97,22 @@ let joinAndDisplayLocalStream = async () =>{
     //4. NOw inserting these video / player section into our html. in the room section
 
     document.getElementById('video-streams').insertAdjacentHTML("beforeend",player)
+                let userNewDiv = document.createElement('div'); // Create a new <div> element
+            let userNewParagraph = document.createElement('p'); // Create a new <p> element
+
+            // Set the text content of the <p> element to the member's name
+            userNewParagraph.textContent = member.name;
+
+            userNewDiv.classList.add('my-div-class');
+            userNewParagraph.classList.add('my-paragraph-class');
+
+
+            // Append the <p> element to the <div> element
+            userNewDiv.appendChild(userNewParagraph);
+
+            // Append the new <div> element to the user-list-container
+            document.getElementById('user-list-container').appendChild(userNewDiv);
+
 
 
     //5. Playing the video into the html tag using play method.
@@ -136,6 +152,10 @@ let handleUserJoined = async(user,mediaType) =>{
 
         // 119. calling the getMember to this user name from database,USING BELOW, 
         let member = await getMember(user)
+
+       
+
+        // document.getElementsByClassName
         // 14. if user doesnt exist or removed , we create a new user . The ID of this container is constructed using the UID of the remote user. 
          player = ` <div class="video-container" id="user-conatiner-${user.uid}">
                         <div class="username-wrapper"> <span class=" user-name"></span>${member.name}</div> 
@@ -145,6 +165,22 @@ let handleUserJoined = async(user,mediaType) =>{
         //15. NOw inserting these video / player section into our html. in the room section . before end means as top
 
         document.getElementById('video-streams').insertAdjacentHTML("beforeend",player)
+
+        let userNewDiv = document.createElement('div'); // Create a new <div> element
+            let userNewParagraph = document.createElement('p'); // Create a new <p> element
+
+            // Set the text content of the <p> element to the member's name
+            userNewParagraph.textContent = member.name;
+
+            userNewDiv.classList.add('my-div-class');
+            userNewParagraph.classList.add('my-paragraph-class');
+            // Append the <p> element to the <div> element
+            userNewDiv.appendChild(userNewParagraph);
+
+            // Append the new <div> element to the user-list-container
+            document.getElementById('user-list-container').appendChild(userNewDiv);
+               
+
         // 16. It plays the video stream of the remote user in the newly created video player element.
         user.videoTrack.play(`user-${user.uid}`)
 
@@ -154,7 +190,7 @@ let handleUserJoined = async(user,mediaType) =>{
     if(mediaType === 'audio'){
         user.audioTrack.play()
     }
-
+    // updateUsersList()
 }
 
 //19. creating method that will help in removing users from DOM and remote users whenever user lefts
@@ -166,6 +202,16 @@ let handleUserLeft = async(user) =>{
 
     //21. Now removing it from DOM by finding it using its id
     document.getElementById(`user-conatiner-${user.uid}`).remove()
+    let userNameElements = document.querySelectorAll('#user-list-container div p');
+
+    // Loop through the p elements and remove the user's name if found
+    userNameElements.forEach((userNameElement) => {
+        if (userNameElement.textContent === user.name) {
+            console.log(userNameElement.textContent)
+            userNameElement.parentElement.remove(); // Remove the parent div element
+        }
+    });
+    
 }
 
 
@@ -248,6 +294,11 @@ let response = await fetch('/create_member',{
 }
 
 
+// adding users to list
+let users = [];
+
+
+
 // 115. function to get others name from database
 // to get the remote user id , pass user as parameter
 let getMember = async(user) =>{
@@ -255,10 +306,14 @@ let getMember = async(user) =>{
     let response = await fetch(`/get_member?UID=${user.uid}&room_name=${CHANNEL}`)
     // 117. pasing the data . must use await 
     let member = await response.json()
+
+    users.push(member); // Add the member to the users array
     return member
     // 118. Now we will call this function inside handleremoteuser. so that whenver new user joins we got the name
 
 }
+
+
 
 //120. NOW WE WANT TO DELETE USER FROM DATABASE THE MOMENTS HE LEAVES THE ROOM --go to views.py
 let deleteMember = async() =>{
@@ -280,10 +335,20 @@ let response = await fetch('/delete_member',{
 // 127.2 --> whenever we close the window, we create a event listener for this below
     }
    
-
+    // let updateUsersList = () => {
+    //     let userListContainer = document.getElementsByClassName('user-list-container'); // Assuming you have a container with id 'user-list'
+    //     userListContainer.innerHTML = ''; // Clear the previous content
+    //     users.forEach(user => {
+    //         userListContainer.innerHTML += `<div class="user">${user.name}</div>`; // Add each user to the HTML
+    //     });
+    // };
 
 //calling the first method
 joinAndDisplayLocalStream()
+
+// Example event handler for when a new member joins the room
+
+
 
 window.addEventListener('beforeunload',deleteMember)
 //27.getting the leave button and applying leaveAndRemoveLocalStream as event listener
@@ -295,3 +360,5 @@ document.getElementById('video-btn').addEventListener('click',toggleCamerabutton
 
 //33.0 audio toogle button
 document.getElementById('mic-btn').addEventListener('click',toggleAudiobutton)
+
+
