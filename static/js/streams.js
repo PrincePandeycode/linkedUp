@@ -343,6 +343,57 @@ let response = await fetch('/delete_member',{
     //     });
     // };
 
+// --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        // CHAT SDK INTEGRATION
+
+        // let initiateRTM = async() =>{
+        //     let client = await AgoraRTM.createInstance(APP_ID)
+        //     await client.login({UID,TOKEN})
+
+        //     const channel = await client.createChannel(CHANNEL)
+        //     await channel.join()
+        //     let form = document.getElementById('formchat')
+
+
+        //     form.addEventListener('submit',async(e) =>{
+        //         e.preventDefault()
+        //         let message = e.target.message.value
+        //         await channel.sendMessage({text:message,type:'text'})
+        //         form.reset()
+
+        //         handleMessage({text:message})
+        //     })
+
+        //     channel.on('ChannelMessage',(message,peerId) =>{
+
+        //         handleMessage(message)
+        //     })
+        // } 
+
+        // let handleMessage = async(message) =>{
+        //     let messages = document.getElementById('messageschat')
+        //     let messageElement = `<p>${message.text}</p>`
+        //     messages.insertAdjacentHTML('beforeend',messageElement)
+        // }
+
+        // initiateRTM()
+
+
+
+
+
+
+
+
+// --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+   
+
+
+
+
+
+
+
 //calling the first method
 joinAndDisplayLocalStream()
 

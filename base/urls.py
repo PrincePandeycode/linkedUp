@@ -19,7 +19,12 @@ urlpatterns = [
     path('get_member',views.getMember),
 
     #122. path to deletMember view, will be used to send data from frontend
-    path('delete_member',views.deleteMember)
+    path('delete_member',views.deleteMember),
+
+    path('save_post/', views.save_post, name='save_post'),
+
+    
+
 
 
 ]

@@ -16,6 +16,8 @@ from django.views.decorators.csrf import csrf_exempt
 
 from datetime import datetime
 
+from .models import Post
+
 # Create your views here.
 def homepage(request):
     return render(request,'base/home.html')
@@ -113,3 +115,18 @@ def deleteMember(request):
         )
     member.delete() #deleting the member
     return JsonResponse('Member was deleted',safe=False)
+
+
+@csrf_exempt
+def save_post(request):
+    if request.method == 'POST':
+        content = request.POST.get('content', None)
+        if content:
+            # Save the post to the database
+            post = Post.objects.create(content=content)
+            return JsonResponse({'success': True, 'message': 'Post saved successfully.'})
+        else:
+            return JsonResponse({'success': False, 'message': 'Content is required.'})
+    else:
+        return JsonResponse({'success': False, 'message': 'Invalid request method.'})
+

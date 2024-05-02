@@ -18,7 +18,23 @@
     .btn-bg{
         background-color: #ff0000;
     }
-    
+
+    .btn-dnd{
+        background-color: rgba(93, 28, 139, 0.975);
+    }
+
+    .posts-bg{
+        background-color: rgb(20, 20, 20);
+        color: aliceblue;
+        font-size: large;
+        font-weight: bold;
+        /* font-style: italic; */
+        width: 100%;
+        /* margin-bottom: 3px; */
+    }
+    .post-item {
+    margin-bottom: 10px; /* Adjust the margin as needed */
+}
     
 </style>
 
@@ -62,7 +78,7 @@
 
 
 
-<div class="row text-center mt-2 " style="height: 80vh;">
+<div class="row text-center mt-2  mx-2" style="height: 80vh;">
     <div class="col-2" id="meeting-column" style="visibility: hidden;" >
         <div class="border border-white border-3 rounded-3 h-100 w-100 d-inline-block p-4">
         <div class="w-100 mx-3 h5 d-flex justify-content-start">In the meet:</div> <hr>
@@ -81,22 +97,36 @@
         </main>
     </div>
 
-    <div class="col-2"  id="chat-column" style="visibility: hidden;" >
-        <div class="border border-white border-3 rounded-3 h-100 w-100 d-inline-block p-4">
-      chats
-        <ul>
-            <li>Prince Pandey</li>
-            <li>Prince Pandey</li>
-            <li>Prince Pandey</li>
-            <li>Prince Pandey</li>
-            <li>Prince Pandey</li>
-            <li>Prince Pandey</li>
-            <li>Prince Pandey</li>
-            <li>Prince Pandey</li>
-            <li>Prince Pandey</li>
-        </ul>
+    <div class="col-2 top-navb d-flex align-items-center flex-column  border border-white border-2 rounded-2 p-3"  id="chat-column"  >
+
+            <button class="btn btn-lg btn-dnd mb-auto p-2 w-100 text-white" onclick="downloadNotes()"><strong>Download Notes</strong></button>
+            
+
+
+            <div id="postList" class="posts-bg mb-1 d-flex align-items-start flex-column" style="padding-left: 13px;">
+                <!-- Posts will be dynamically added here -->
+            </div>
+                
+            <form id="postForm" class="">
+                <!-- <input type="textarea" class="form-control" name="content" id="content" placeholder="write your notes"> -->
+                <div class="mb-2">
+                    <!-- <label for="exampleFormControlTextarea1" class="form-label"></label> -->
+                    <textarea class="form-control form-control-lg" name="content" id="content" rows="3" placeholder="Write your notes here...." ></textarea>
+                  </div>
+                
+               
+            </form>
+            <div class="d-flex">
+                <button type="button" class="btn btn-secondary mx-1" onclick="savePost()"><strong>Save your Note</strong></button>
+            <button class="btn btn-bg text-white mx-1" onclick="clearLocalStorage()"><strong>clear Notes</strong></button>
+            </div>
+            
+            <!-- <button class="btn btn-danger" onclick="clearLocalStorage()">clear Notes</button> -->
+            <!-- <button class="btn btn-primary" onclick="downloadNotes()">Download Notes</button> -->
+
+            
         </div>
-    </div>
+    
 
 
 </div>
@@ -144,6 +174,159 @@ if (meetingColumn.style.visibility === 'visible') {
         // Get references to the "In the meet" and "Chats" columns
        
     }
+
+
+
+
+//     function savePost() {
+//     var content = document.getElementById('content').value;
+
+//     // Create a new XMLHttpRequest object
+//     var xhr = new XMLHttpRequest();
+
+//     // Configure the request
+//     xhr.open('POST', '/save_post/', true);
+//     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+//     // Define what happens on successful data submission
+//     xhr.onload = function () {
+//         if (xhr.status === 200) {
+//             console.log(xhr.responseText);
+//             // Optionally, you can display a success message or update the UI
+//         } else {
+//             console.error('Request failed. Error: ' + xhr.statusText);
+//         }
+//     };
+
+//     // Handle network errors
+//     xhr.onerror = function () {
+//         console.error('Request failed');
+//     };
+
+//     // Send the request
+//     xhr.send('content=' + content);
+// }
+
+
+
+// -------------------------
+
+// function handleKeyPress(event) {
+//     // Check if Enter key is pressed
+    
+//         event.preventDefault(); // Prevent form submission
+//         savePost(); // Call savePost() function
+//     return false
+// }
+
+window.addEventListener('keydown',function(e) {
+        if (e.keyIdentifier=='U+000A' || e.keyIdentifier=='Enter' || e.keyCode==13) {
+            if (e.target.nodeName=='INPUT' && e.target.type=='text') {
+                e.preventDefault();
+                savePost()
+
+                return false;
+            }
+        }
+    }, true);
+
+function savePost() {
+    var content = document.getElementById('content').value;
+
+    // Get existing posts from local storage or create an empty array
+    var posts = JSON.parse(localStorage.getItem('posts')) || [];
+
+    // Add the new post
+    posts.push({ content: content });
+
+    // Save the updated posts back to local storage
+    localStorage.setItem('posts', JSON.stringify(posts));
+
+    // Display posts
+    displayPosts(posts);
+
+    // Clear the input field
+    document.getElementById('content').value = '';
+}
+
+// function displayPosts(posts) {
+//     var postList = document.getElementById('postList');
+//     postList.innerHTML = ''; // Clear previous posts
+
+//     posts.forEach(function (post) {
+//         var postItem = document.createElement('div');
+//         postItem.textContent = post.content;
+//         postList.appendChild(postItem);
+//     });
+// }
+
+function displayPosts(posts) {
+    var postList = document.getElementById('postList');
+    postList.innerHTML = ''; // Clear previous posts
+
+    posts.forEach(function (post, index) {
+        var postItem = document.createElement('div');
+        postItem.classList.add('post-item'); // Add a class for styling
+        postItem.textContent = (index + 1) + '. ' + post.content; // Add index number
+        postList.appendChild(postItem);
+    });
+}
+
+function clearLocalStorage() {
+    // Clear posts from local storage
+    localStorage.removeItem('posts');
+
+    // Clear displayed posts
+    document.getElementById('postList').innerHTML = '';
+}
+
+// Fetch posts when the page loads
+window.onload = function () {
+    // Check if posts exist in local storage
+    var posts = JSON.parse(localStorage.getItem('posts'));
+
+    // If posts exist, display them
+    if (posts) {
+        displayPosts(posts);
+    }
+};
+
+
+function downloadNotes() {
+    var posts = JSON.parse(localStorage.getItem('posts'));
+
+    // Check if there are any posts to download
+    if (posts && posts.length > 0) {
+        // Convert posts array to a plain text format
+        var textContent = '';
+        posts.forEach(function(post, index) {
+            textContent += ` ${index + 1}:\n${post.content}\n\n`;
+        });
+
+        // Create a Blob with the text data
+        var blob = new Blob([textContent], { type: 'text/plain' });
+
+        // Create a temporary anchor element
+        var a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        
+        // Set the download attribute with a filename
+        a.download = 'notes.txt';
+
+        // Append the anchor to the document body and click it programmatically
+        document.body.appendChild(a);
+        a.click();
+
+        // Remove the anchor from the document body
+        document.body.removeChild(a);
+    } else {
+        alert('No notes to download.');
+    }
+}
+
+
+
+// -------------------------
 </script>
 
 

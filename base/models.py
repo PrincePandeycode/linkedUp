@@ -18,3 +18,8 @@ class RoomMember(models.Model):
 # 84.now makemigrations and migrtae --> creating superuser password -- prince11 username --princechat
 
 # 85. now we will register this model into admin panel --> go to admin.py
+
+
+class Post(models.Model):
+    content = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
