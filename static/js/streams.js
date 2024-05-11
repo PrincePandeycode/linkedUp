@@ -21,6 +21,10 @@
 // const TOKEN = '0062c67e9a895d04a318044724f6a4bc0d0IADe2uSExoGQ5Id6cwsGN7KBhhlp6VHTDKyIg5Q/UndZQAtCGHdBT8p1IgBowyQA1iUhZgQAAQDWJSFmAgDWJSFmAwDWJSFmBADWJSFm' 
 
 
+// import AgoraManager from "../agora_manager/agora_manager.js";
+// import AgoraRTC from "agora-rtc-sdk-ng";
+
+
 //68.Now we will use our values stores in session
 const APP_ID = '2c67e9a895d04a318044724f6a4bc0d0'
 const CHANNEL = sessionStorage.getItem('room')
@@ -413,3 +417,41 @@ document.getElementById('video-btn').addEventListener('click',toggleCamerabutton
 document.getElementById('mic-btn').addEventListener('click',toggleAudiobutton)
 
 
+// // screen sharing-------------------------------------------------------------------------------------------
+// const startScreenShare = async (channelParameters, screenPlayerContainer, localPlayerContainer) => {
+//     // Create a screen track for screen sharing.
+//     channelParameters.screenTrack = await AgoraRTC.createScreenVideoTrack();
+
+//     // Unpublish and close the local video track.
+//     await agoraManager.getAgoraEngine().unpublish([channelParameters.localVideoTrack]);
+//     channelParameters.localVideoTrack.close();
+
+//     // Publish the screen track.
+//     await agoraManager.getAgoraEngine().publish([channelParameters.screenTrack]);
+
+//     // Play the screen track in the screen player container.
+//     channelParameters.screenTrack.play(screenPlayerContainer);
+// };
+
+// const stopScreenShare = async (channelParameters, localPlayerContainer) => {
+//     // Unpublish and close the screen track.
+//     await agoraManager.getAgoraEngine().unpublish([channelParameters.screenTrack]);
+//     channelParameters.screenTrack.close();
+
+//     // Create a new local video track.
+//     channelParameters.localVideoTrack = await AgoraRTC.createCameraVideoTrack();
+
+//     // Publish the local video track.
+//     await agoraManager.getAgoraEngine().publish([channelParameters.localVideoTrack]);
+
+//     // Play the local video track in the local player container.
+//     channelParameters.localVideoTrack.play(localPlayerContainer);
+// };
+
+// // Get references to the player containers
+// const screenPlayerContainer = document.getElementById('screenPlayerContainer');
+// const localPlayerContainer = document.getElementById('localPlayerContainer');
+
+// // Attach event listeners to the buttons
+// document.getElementById('startScreenShareBtn').addEventListener('click', () => startScreenShare(channelParameters, screenPlayerContainer, localPlayerContainer));
+// document.getElementById('stopScreenShareBtn').addEventListener('click', () => stopScreenShare(channelParameters, localPlayerContainer));
